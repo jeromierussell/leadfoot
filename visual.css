@@ -1,0 +1,242 @@
+body{
+ font-family: "trebuchet ms", verdana, sans-serif;
+ font-size: 12px;
+ line-height: 1.5em;
+ color: #333;
+ background: #ffffff;
+ text-align: left;
+ }
+
+h3{
+ font: bold 140% trebuchet ms, sans-serif;
+ letter-spacing: 5px;
+ color: #000000;
+ }
+
+span#timestamp {
+	color: #999;
+	font-style: italic;
+	font-size: 12px;
+}
+
+span#postname{
+	color: #000;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 13px;
+}
+span#postmessage{
+	color: #000;
+	font-style: normal;
+	font-size: 12px;
+}
+
+hr{
+ color: #eee;
+ background-color: #000;
+ height: 2px;
+ }
+
+a:link{
+ text-decoration: underline;
+ color: #0000FF;
+ }
+
+a:visited{
+ text-decoration: underline;
+ color: #0000FF;
+ }
+
+img{
+ border: 0;
+ }
+
+#header{
+ border: solid #333333;
+ border-width: 0 0 1px 0;
+ background: #ffcc66;
+ color: #333333;
+ }
+     
+#left-col{
+ background: #ffffff;
+ color: #333333;
+ }
+
+#right-col{
+ background: #ffffff;
+ color: #333333;
+ }
+
+#no-col{
+ border: solid #333333;
+ border-width: 2px 2px 2px 2px;
+ background: #ffffff;
+ color: #333333;
+ }
+ 
+#footer{
+ background: #ffcc66;
+ color: #333333;
+ border: solid #333333;
+ border-width: 1px 0 0 0;
+ text-align: center;
+ font-weight:bold;
+ }
+
+a:hover {
+ background:#ffcc66;
+ font-weight:normal;
+ }
+
+#rules_main {
+ border-width:2px;
+ border-style:solid;
+ border-color:#000000;
+ padding:3px;
+}
+
+#rules_main td {
+ border-width:1px;
+ border-style:solid;
+ border-color:#999999;
+ padding:6px;
+}
+
+#nickname {
+ color: #FF0000;
+ font-weight: bold;
+ font-style: italic;
+}
+
+#main {
+	margin: 5px 5px 5px 5px;
+	padding: 5px 5px 5px 5px;
+	background: #FFFFFF;
+}
+
+
+#bar {
+	float: left;
+	width: 200px;
+	background: #eee;
+	z-index: 1;
+	padding: 10px;
+	margin-right: 30px;
+	height: 100%;
+}
+
+#bar h1 {
+ 	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.3em;
+}
+
+#edititem {
+ 	border-width:1px;
+ 	border-style:dotted;
+}
+
+#newstitle {
+	font-family: Trebuchet MS;
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#newsdt {
+	font-style: italic;
+}
+
+#newsbody {
+	font-family: Trebuchet MS;
+	font-size: 12px;
+}
+
+#schedule {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+}
+#schedule td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+}
+
+#tracks {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+	}
+#tracks td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+	}
+
+#leaderboard {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+}
+#leaderboard td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+}
+
+#poles {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+}
+
+#poles td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+}
+
+#raceresults {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+}
+
+#raceresults td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+}
+
+#news {
+	 padding:3px;
+}
+
+#news td {
+	 padding:6px;
+}
+
+#mystats {
+	 border-width:2px;
+	 border-style:solid;
+	 border-color:#000000;
+	 padding:3px;
+}
+
+#mystats td {
+	 border-width:1px;
+	 border-style:solid;
+	 border-color:#999999;
+	 padding:6px;
+}

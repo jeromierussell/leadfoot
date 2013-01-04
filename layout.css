@@ -1,0 +1,86 @@
+html, body {
+ height:100%;
+ }
+
+html,body {
+ margin:0;
+ padding:0
+ }
+
+body{
+ width: 100%;
+ }
+
+p{
+ margin-top: 10px;
+ }
+
+h3{
+ margin-bottom: 0;
+ }
+
+#header{
+ width: 100%;
+ height: 100px;
+ margin: 0;
+ }
+     
+#left-col{
+ width: 125px;
+ float: left;
+ margin: 0;
+ padding: 5px;
+ }
+
+#right-col{
+ margin: 0;
+ padding: 5px;
+ }
+
+#no-col{
+ width: 98%;
+ margin: 0;
+ padding: 5px;
+ }
+
+
+#login{
+ width: 25%;
+ float: left;
+ margin: 0;
+ padding: 5px;
+ }
+ 
+#page_heading{
+
+ }
+
+#links{
+ width: 25%;
+ margin: 0;
+ padding: 5px;
+
+ }
+
+#footer{
+ width: 100%;
+ height: 25px;
+ margin: 0;
+ float: bottom;
+ clear: both;
+ }
+
+#clearfooter {
+ clear:both;
+ height:20px;
+ }
+ 
+#outer {
+ min-height:100%;
+ margin-bottom:-26px;
+ height:auto;
+ }
+
+* html #outer {
+ height:100%;
+ }
