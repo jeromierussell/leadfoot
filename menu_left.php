@@ -10,7 +10,7 @@
 					<li class="first"><a href='<?php $config_basedir ?>index.php?content_page=leaderboard'>Leaderboard</a></li>
 					<li><a href='<?php $config_basedir ?>index.php?content_page=mystats'>My Stats</a></li>
 					<li><a href='<?php $config_basedir ?>index.php?content_page=makepick'>Make Pick</a></li>
-                    <li><a href='<?php $config_basedir ?>index.php?content_page=queue'>Manage Pick Queue</a></li>
+                    <li><a href='#' onclick="alert('Coming Soon!');">Manage Pick Queue</a></li>
 					<li><a href='<?php $config_basedir ?>index.php?content_page=historicalleagueresults'>Historical League Results</a></li>
 					<li><a href='<?php $config_basedir ?>index.php?content_page=driver'>Drivers</a></li>
 					<li><a href='<?php $config_basedir ?>index.php?content_page=messageboard'>Message Board</a></li>
