@@ -5,7 +5,6 @@
 
     Sam Hornish<br/>
     Trevor Bayne<br/>
-    Danica Patrick<br/>
     Jason Leffler<br/>
     Joe Nemechek<br/>
     Reed Sorenson<br/>
