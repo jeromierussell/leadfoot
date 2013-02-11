@@ -1,7 +1,7 @@
 </div>
 
 <div id='footer'>
-Copyright &copy; 2010 ~ www.westcrabtree.com ~ v.2.1
+Copyright &copy; 2013 ~ www.westcrabtree.com ~ v.3.0
 </div> <!-- footer -->
 
 </body>
