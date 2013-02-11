@@ -38,6 +38,9 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 		{
 			$postTitle   = mysql_real_escape_string($postTitle);
 			$postContent = mysql_real_escape_string($postContent);
+
+            $postTitle   = stripslashes(str_replace('\r\n', '', $postTitle));
+            $postContent = stripslashes(str_replace('\r\n', '', $postContent));
 		}
 
 		$sql = "UPDATE news SET title='" . $postTitle . "', dt=NOW(), body = '" . $postContent . "' WHERE id=" . $validentry . ";";
