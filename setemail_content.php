@@ -18,7 +18,7 @@
 	else
 	{
 	?>
-		<div id='right-col'>
+		<div id='right-col' class='post'>
 		<div id='main_content'>
 		<h1>Set Email Address</h1> 
 	<?php

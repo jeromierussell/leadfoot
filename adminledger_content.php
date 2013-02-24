@@ -1,4 +1,4 @@
-<div id='right-col'>
+<div id='right-col' class='post'>
 	<div id='main_content'>
 	<h1>Ledger</h1>
 <?php

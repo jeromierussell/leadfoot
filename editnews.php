@@ -8,6 +8,7 @@ tinyMCE.init({
 	theme_advanced_buttons3_add : "fullpage"
 });
 </script>
+<div class='post'>
 <?php
 
 if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree" or $_SESSION['USERNAME'] == "russdog" or $_SESSION['USERNAME'] == "gofasta")
@@ -96,3 +97,4 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 }
 
 ?>
+</div>
