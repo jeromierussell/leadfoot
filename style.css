@@ -346,6 +346,7 @@ clear: right;
 
 #sidebar li li a {
 	padding: 0px 0px 0px 15px;
+    text-decoration: none;
 }
 
 #sidebar h2 {
@@ -364,17 +365,17 @@ clear: right;
 	margin: 0 0px;
 	padding: 0px 20px 20px 20px;
 	text-align: justify;
-	color: #847F7E;
+	color: #B5AFAE;
 }
 
 #sidebar a {
 	border: none;
-	color: #847F7E;
+	color: #B5AFAE;
 }
 
 #sidebar a:hover {
 	text-decoration: underline;
-	color: #847F7E;
+	color: #B5AFAE;
 }
 
 /* Calendar */
@@ -422,11 +423,11 @@ clear: right;
 	font-size: 10px;
 	text-transform: uppercase;
 	text-align: center;
-	color: #847F7E;
+	color: #B5AFAE;
 }
 
 #footer a {
-	color: #847F7E;
+	color: #B5AFAE;
 }
 
 /* custom */
@@ -570,9 +571,14 @@ background-color:#101010;
 /*color:#DBDBDB*/
 }
 
+#posts tr.old a
+{
+  color:#B5AFAE;
+}
 #posts tr.old:hover
 {
-color:#000000;
+  color:#B5AFAE;
+  /*color:#000000;*/
   background-color: #ff9578;
 /*background-color:#EFF3F9;*/
 }

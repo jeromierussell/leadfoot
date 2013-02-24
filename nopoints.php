@@ -1,5 +1,5 @@
 <h2 class="heading">Pick Info</h2>
-<div class="content"  style='line-height:20px;'>
+<div class="content"  style='line-height:20px;color:#B5AFAE'>
 <span class="smallCaps">The following drivers will receive no points if you pick them:</span>
     <p></p>
 
