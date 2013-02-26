@@ -1,4 +1,4 @@
-<div class="post">    
+<div class="post widePost">
     <div class="story">
 <?php
 	$track_id = $_REQUEST['track_id'];	

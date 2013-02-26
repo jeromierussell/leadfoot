@@ -56,6 +56,8 @@ function add_post($message, $name)
 	$connection = db_connect();
 	$name = mysql_real_escape_string($name,$connection);
 	$message = mysql_real_escape_string($message,$connection);
+    $message = stripslashes(str_replace('\r\n', '', $message));
+
 	$query = "INSERT INTO `guestbook` SET `name` = '{$name}', `comments` = '{$message}'";
 	mysql_query($query);
 	db_close($connection);

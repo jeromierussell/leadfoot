@@ -8,6 +8,7 @@ tinyMCE.init({
 	theme_advanced_buttons3_add : "fullpage"
 });
 </script>
+<div class='post'>
 <?php
 
 if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree" or $_SESSION['USERNAME'] == "russdog" or $_SESSION['USERNAME'] == "gofasta")
@@ -38,6 +39,9 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 		{
 			$postTitle   = mysql_real_escape_string($postTitle);
 			$postContent = mysql_real_escape_string($postContent);
+
+            $postTitle   = stripslashes(str_replace('\r\n', '', $postTitle));
+            $postContent = stripslashes(str_replace('\r\n', '', $postContent));
 		}
 
 		$sql = "UPDATE news SET title='" . $postTitle . "', dt=NOW(), body = '" . $postContent . "' WHERE id=" . $validentry . ";";
@@ -93,3 +97,4 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 }
 
 ?>
+</div>

@@ -1,5 +1,5 @@
 <h2 class="heading">Streaks</h2>
-<div class="content">
+<div class="content" style="color:#B5AFAE">
 <?php
 	if( SEASON_COMPLETED_WEEK > 0 )
 	{

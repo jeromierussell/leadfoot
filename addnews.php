@@ -8,7 +8,7 @@ tinyMCE.init({
 	theme_advanced_buttons3_add : "fullpage"
 });
 </script>
-
+<div class='post'>
 <?php
 
 if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree" or $_SESSION['USERNAME'] == "russdog" or $_SESSION['USERNAME'] == "gofasta")
@@ -20,8 +20,8 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 
 		if(get_magic_quotes_gpc())
 		{
-            $postTitle   = stripslashes($postTitle);
-            $postContent = stripslashes($postContent);
+            $postTitle   = stripslashes(str_replace('\r\n', '', $postTitle));
+            $postContent = stripslashes(str_replace('\r\n', '', $postContent));
 		}
 
         $sql = "INSERT into news(dt,title,body) VALUES(NOW(), '" . $postTitle . "', '" . $postContent . "');";
@@ -42,3 +42,5 @@ if($_SESSION['USERNAME'] == "steppsr" or $_SESSION['USERNAME'] == "westcrabtree"
 	}
 }
 	?>
+
+</div>
