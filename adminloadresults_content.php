@@ -9,7 +9,8 @@
 	{
 		echo "<form action='".$config_basedir."index.php?content_page=adminloadresults' method='post'>\n";		
 		echo "<h2>Fetch results for race ".SEASON_NEXT_WEEK." of ".SEASON_YEAR."?</h2>\n";
-		echo "<input type='submit' name='fetch' value='Fetch'>\n";
+		echo "<h3>Enter espn.com raceid e.g. 201302240001</h3><input type='text' name='espnkey' value='' size='50'/>";
+		echo "<input type='submit' name='fetch' value='Fetch'/>\n";
 		echo "</form>";
 	}
 	// attempt to fetch the race results and dispaly them for confirmation before loading
