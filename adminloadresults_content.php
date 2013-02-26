@@ -5,25 +5,27 @@
 	include('fetchresults.php');
 	include('emailfunctions.php');
 		
+	$espn_race_id = $_POST['espnkey'];
+	
 	if( !$_POST['fetch'] && !$_POST['load'] )
 	{
 		echo "<form action='".$config_basedir."index.php?content_page=adminloadresults' method='post'>\n";		
 		echo "<h2>Fetch results for race ".SEASON_NEXT_WEEK." of ".SEASON_YEAR."?</h2>\n";
-		echo "<h3>Enter espn.com raceid e.g. 201302240001</h3><input type='text' name='espnkey' value='' size='50'/>";
+		echo "<h3>Enter espn.com raceid e.g. 201302240001</h3><input type='text' name='espnkey' size='50'/>";
 		echo "<input type='submit' name='fetch' value='Fetch'/>\n";
 		echo "</form>";
 	}
 	// attempt to fetch the race results and dispaly them for confirmation before loading
 	else if( $_POST['fetch'] )
 	{		
-		$raceresults = getCurrentRaceResults();
+		$raceresults = getCurrentRaceResults( $espn_race_id );
 		$allow_load = false;			
 		
 		$unknown_drivers=false;
 		
 		$table_string = "";
 		$table_string .= "<table id='results'>";
-		$table_string .= "<tr><th>Finish Pos</th><th>Starting Pos</th><th>Car No</th><th>Driver</th><th>Make</th><th>Sponsor</th><th>Points</th><th>Bonus</th><th>Total<br>Points</th><th>Winnings</th></tr>";
+		$table_string .= "<tr><th>Finish Pos</th><th>Starting Pos</th><th>Car No</th><th>Driver</th><th>Make</th><th>Points</th><th>Bonus</th><th>Total<br>Points</th></tr>";
 		for( $i = 0; $i < count($raceresults); $i++ )
 		{
 			$rowdata = $raceresults[$i];
@@ -48,12 +50,11 @@
 					$rowdata['startpos']."</td><td>".
 					$rowdata['carnum']."</td><td>".
 					$rowdata['driver']."</td><td>".
-					$rowdata['carmake']."</td><td>".
-					$rowdata['sponsor']."</td><td>".
+					$rowdata['carmake']."</td><td>".					
 					$rowdata['points']."</td><td>".
 					$rowdata['bonus']."</td><td>".
-					$rowdata['totalpoints']."</td><td>".
-					$rowdata['winnings']."</td></tr>";
+					$rowdata['totalpoints']."</td>".
+					"</tr>";
 			}			
 		}
 		$table_string .= "</table>";
@@ -66,6 +67,7 @@
 		{
 			echo "<h2>Click 'Load' to import these results</h2>";
 			echo "<form action='".$config_basedir."index.php?content_page=adminloadresults' method='post'>";
+			echo "<input type='hidden' name='espnkey' value='".$espn_race_id."'>";
 			echo "<input type='submit' name='load' value='Load'>\n";
 			echo "</form>";
 		}		
@@ -78,7 +80,7 @@
 		
 		echo "Inserting race results...<p>";
 		// insert rows into the historicalraceresults table
-		$raceresults = getCurrentRaceResults();
+		$raceresults = getCurrentRaceResults( $espn_race_id );
 		$race_key = SEASON_YEAR.str_pad(SEASON_NEXT_WEEK, 2, "0", STR_PAD_LEFT);
 		
 		for( $i = 0; $i < count($raceresults); $i++ )
@@ -87,9 +89,9 @@
 			$driver_id = getDriverId( $rowdata['driver'] );
 			if( is_numeric($rowdata['startpos']) && is_numeric($rowdata['finishpos']) && is_numeric($rowdata['points']) )
 			{
-				$sql = "INSERT INTO historicalraceresults (year, week, drivername, carnumber, startingpos, finishingpos, points, bonuspoints, totalpoints, carmake, sponsor, winnings, schedule_id, driver_id, racekey)".
+				$sql = "INSERT INTO historicalraceresults (year, week, drivername, carnumber, startingpos, finishingpos, points, bonuspoints, totalpoints, carmake, schedule_id, driver_id, racekey)".
 				" VALUES (".SEASON_YEAR.", ".SEASON_NEXT_WEEK.", '".$rowdata['driver']."', '".$rowdata['carnum']."', ".$rowdata['startpos'].", ".$rowdata['finishpos'].", ".$rowdata['points'].", ".$rowdata['bonus'].
-				", ".$rowdata['totalpoints'].", '".$rowdata['carmake']."', '".$rowdata['sponsor']."', ".$rowdata['winnings'].", ".$schedule_id.", ".$driver_id.", '".$race_key."');";
+				", ".$rowdata['totalpoints'].", '".$rowdata['carmake']."', ".$schedule_id.", ".$driver_id.", '".$race_key."');";
 				echo "&nbsp;&nbsp; Driver [".$rowdata['driver']."] finish [".$rowdata['finishpos']."] start [".$rowdata['startpos']."] points [".$rowdata['points']."]<p>";				
 				mysql_query($sql) or die(mysql_error());						
 			}
@@ -269,48 +271,26 @@
 	}
 	
 	// build an intelligent array of race results with keywords and performing necessary transformation on data	
-	function getCurrentRaceResults()
+	function getCurrentRaceResults( $key )
 	{
 		$namedresults[] = array();
-		$rawresults = getResults( SEASON_YEAR, SEASON_NEXT_WEEK );
+		$rawresults = getResults( $key );
 		for( $i = 0; $i < count($rawresults); $i++ )
 		{
 			$rawrow = $rawresults[$i];
-			
-			$pointArray = explode("/", $rawrow[6]);
-
-				// Split the points into total and bonus
-			$totalpoints = $pointArray[0];
-			
-			if( count($pointArray) > 1 )
-			{
-				$bonus = $pointArray[1];
-			}
-			else
-			{
-				$bonus = 0;
-			}
-				
 						
-			if( $totalpoints == "PE" )
-			{
-				$totalpoints = 0;
-				$bonus = 0;
-			}
-			
-			$points = $totalpoints-$bonus;
-			
 			$smartrow[] = array();
 			$smartrow['finishpos'] = $rawrow[0];
-			$smartrow['startpos'] = $rawrow[1];
+			$smartrow['driver'] = $rawrow[1];						
+			$smartrow['startpos'] = $rawrow[6];
 			$smartrow['carnum'] = $rawrow[2];
-			$smartrow['driver'] = trim(str_replace(" *", "", $rawrow[3]));
-			$smartrow['carmake'] = $rawrow[4];
-			$smartrow['sponsor'] = str_replace("'", "", $rawrow[5]);
-			$smartrow['points'] = $points;
-			$smartrow['bonus'] = $bonus;
-			$smartrow['totalpoints'] = $totalpoints;
-			$smartrow['winnings'] = str_replace(",", "", $rawrow[9]);
+			//$smartrow['driver'] = trim(str_replace(" *", "", $rawrow[3]));
+			$smartrow['carmake'] = $rawrow[3];
+			//$smartrow['sponsor'] = str_replace("'", "", $rawrow[5]);		
+			$smartrow['totalpoints'] = $rawrow[8];
+			$smartrow['bonus'] = $rawrow[9];
+			$smartrow['points'] = $smartrow['totalpoints']-$smartrow['bonus'];
+			//$smartrow['winnings'] = str_replace(",", "", $rawrow[9]);
 			$namedresults[$i] = $smartrow;
 		}
 		return $namedresults;

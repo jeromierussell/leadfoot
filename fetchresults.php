@@ -14,7 +14,7 @@ function getSchedules( $year )
 
 	$results = null;
 
-	// Fetch the results for this race number
+	// Fetch the results for this race number    
     $parser = HtmlParser_ForURL_cURL( "http://www.nascar.com/races/cup/".$year."/data/schedule.html" );
     while( $parser->parse() )
 	{
@@ -57,9 +57,9 @@ function getSchedules( $year )
 
 }
 
-function getResults( $year, $nascarRaceNumber )
+function getResults( $espn_race_id )
 {
-	echo "Getting results for year ".$year." race #".$nascarRaceNumber."\n";
+	echo "Getting results from espn.com with raceid ".$espn_race_id."\n";
 
 	// State flags for begin and end of parsing
 	$foundTableStart = FALSE;
@@ -71,18 +71,20 @@ function getResults( $year, $nascarRaceNumber )
 	$results = null;
 
 	// Fetch the results for this race number
-    $parser = HtmlParser_ForURL_cURL( "http://www.nascar.com/races/cup/".$year."/".$nascarRaceNumber."/data/results_official.html" );
+	$url = "http://espn.go.com/racing/raceresults/_/series/sprint/raceId/".$espn_race_id;
+	echo "fetching from url: ".$url."\n";
+    $parser = HtmlParser_ForURL_cURL( $url );
 	if( !isset($parser) || $parser == null )
 	{
-		echo "No results found for race #".$nascarRaceNumber." of ".$year.".";
+		echo "No results found for race id ".$espn_race_id.".";
 		return;
 	}
     while( $parser->parse() )
 	{
-		// Find the start of the table
-		if( $parser->iNodeType == NODE_TYPE_TEXT && $parser->iNodeValue == "Status" || $parser->iNodeValue == "STATUS" )
+		// Find the start of the table		
+		if( $parser->iNodeType == NODE_TYPE_TEXT && $parser->iNodeValue == "POS" || $parser->iNodeValue == "pos" )
 		{
-			$foundTableStart = TRUE;
+			$foundTableStart = TRUE;			
 		}
 
 		// End of the table data, return the results we have
@@ -95,13 +97,13 @@ function getResults( $year, $nascarRaceNumber )
 
 		// Start looking at table rows
 		if( $foundTableStart == TRUE )
-		{
+		{			
 			// Start of a TR tag
 			if( $parser->iNodeType == NODE_TYPE_ELEMENT && 
 				$parser->iNodeName == "tr" )
 			{
 				// Parse this row
-				$rowData = parseRow($parser, 9);
+				$rowData = parseRow($parser, 11);
 
 				// If we have row data, add to our row array
 				if( isset($rowData) )
@@ -121,17 +123,17 @@ function parseRow( $parser, $target_col_count )
 {
 	$col = 0;
 	$rowData = null;
-
+	
 	// We should be on a TR tag when called, we'll
 	// iterate and return all the data columns in this row
     while( $parser->parse() )
-	{
+	{			
 		// End tag
 		if( $parser->iNodeName == "tr" &&
 			$parser->iNodeType == NODE_TYPE_ENDELEMENT )
 		{
 			// Advance the point and return the array
-			$parser->parse();
+			//$parser->parse();
 
 			// 8 columns, perfect this is what we want
 			//if( $col == $target_col_count )
@@ -158,6 +160,7 @@ function parseRow( $parser, $target_col_count )
 				$parser->parse();
 				$hadLink = TRUE;
 			}
+			
 			$rowData[$col++] = $parser->iNodeValue;
 
 			// Find the end tag of the <a> tag
