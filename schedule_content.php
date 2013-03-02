@@ -34,6 +34,7 @@
 		$sql = "SELECT s.week, s.id as race_id, DATE_FORMAT(s.dt,'%a %b %D, %Y') AS date, DATE_FORMAT(s.dt,'%h:%i %p') AS time, s.pointsrace AS pointsrace, s.racename AS race,t.name AS track,s.track_id, s.station, s.dt FROM schedule s INNER JOIN tracks t ON s.track_id = t.id WHERE s.year = " . $display_year . " ORDER BY s.dt ASC;--";
 		$results = mysql_query($sql);
 		echo "<tr><th align='center'>#</th><th>Race</th><th>Track</th><th align='center'>Station</th><th align='center'>Time (ET)</th><th>Date</th><th>Points Race?</th></tr>\n";
+		$count=0;
 		while($row = mysql_fetch_assoc($results))
 		{	$count++;
 			if($row['pointsrace'] == 1)
