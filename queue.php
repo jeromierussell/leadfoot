@@ -89,6 +89,19 @@
     $possible_results = mysql_query($possible_sql) or die(mysql_error());
 
 ?>
+<div id="instructions" style="color:#B5AFAE">
+    <p>
+The drivers on the left are drivers that you can add to your pick queue.  The drivers on the right are the drivers currently
+    in your pick queue.  Click on a driver on the left to add them to the queue on the right.  Once drivers are on the right
+    side, you can drag them up and down to order them.  Click "Save" to save your queue.
+    </p>
+    <p>
+        If you have chosen to use the pick queue to make your pick automatically, the driver highest on your queue who hasn't
+        been chosen, will be automatically picked for you.  If all the drivers on your queue have been picked when it is
+        your turn, you will need to pick manually (like normal).
+
+    </p>
+</div>
 <a href = "#" onclick="saveOrder();" style="font-size:1.5em;">Save</a>
 <br/>
 <br/>
