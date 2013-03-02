@@ -10,6 +10,8 @@
     #possible li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
     #possible li span { position: absolute; margin-left: -1.3em; }
 
+    .x {float:right}
+
 </style>
 <script>
     $(function()
@@ -18,6 +20,7 @@
         $( "#sortable" ).disableSelection();
 
         $("#possible .ui-icon-arrowthick-2-n-s").hide();
+        $("#possible .x").hide();
     });
 
     function saveOrder()
@@ -41,12 +44,16 @@
             var $id = $(this).attr('id');
             var $returnVal = !$(this).remove().appendTo('#sortable');
             $("#sortable .ui-icon-arrowthick-2-n-s").show();
+            $("#sortable .x").show();
             return $returnVal;
         });
 
-        $("#sortable .clickable").live('click', function(event) {
-            var $id = $(this).attr('id');
-            var $returnVal = !$(this).remove().appendTo('#possible');
+        $("#sortable .x").live('click', function(event) {
+            var $id = $(this).parent().attr('id');
+            var $returnVal = !$(this).parent().remove().appendTo('#possible');
+            $(this).parent().class = $(this).parent().addClass('clickable')
+            $("#possible .ui-icon-arrowthick-2-n-s").hide();
+            $("#possible .x").hide();
             return $returnVal;
         });
     });
@@ -97,7 +104,7 @@
                 {
                     if($in_queue[$row['id']] != 1)
                     {
-                        echo "<li class='ui-state-default order clickable' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "</li>";
+                        echo "<li class='ui-state-default order clickable' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "<div class='x'>X</div></li>";
                     }
                 }
             ?>
@@ -109,7 +116,7 @@
             <?php
                 while($row = mysql_fetch_assoc($queue_results))
                 {
-                    echo "<li class='ui-state-default order' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "</li>";
+                    echo "<li class='ui-state-default order' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "<div class='x'>X</div></li>";
                 }
             ?>
         </ul>
