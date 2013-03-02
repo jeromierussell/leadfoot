@@ -69,7 +69,7 @@
     $in_queue = array();
     if($row != null && $row['id'] != null)
     {
-        $queue_sql = "select d.name, d.id from queues q, drivers d where q.member_queue_id = " . $row['id'] . " and d.id = q.driver_id order by q.position";
+        $queue_sql = "select d.name, d.id, d.currentpoints from queues q, drivers d where q.member_queue_id = " . $row['id'] . " and d.id = q.driver_id order by q.position";
         if($row['active'] == 1)
         {
             $active = true;
@@ -85,7 +85,7 @@
         $queue_results = mysql_query($queue_sql) or die(mysql_error());
     }
 
-    $possible_sql = "SELECT id,name,number,owner,team,make,must_qualify FROM drivers d WHERE d.isactive=1 ORDER BY name ASC";
+    $possible_sql = "SELECT id,currentpoints,name,number,owner,team,make,must_qualify FROM drivers d WHERE d.isactive=1 ORDER BY currentpoints DESC,name ASC";
     $possible_results = mysql_query($possible_sql) or die(mysql_error());
 
 ?>
@@ -104,7 +104,7 @@
                 {
                     if($in_queue[$row['id']] != 1)
                     {
-                        echo "<li class='ui-state-default order clickable' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "<div class='x'>X</div></li>";
+                        echo "<li class='ui-state-default order clickable' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . " (" . $row['currentpoints'] .")<div class='x'>X</div></li>";
                     }
                 }
             ?>
@@ -116,7 +116,7 @@
             <?php
                 while($row = mysql_fetch_assoc($queue_results))
                 {
-                    echo "<li class='ui-state-default order' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . "<div class='x'>X</div></li>";
+                    echo "<li class='ui-state-default order' id='" . $row['id'] . "'><span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" . $row['name'] . " (" . $row['currentpoints'] .")<div class='x'>X</div></li>";
                 }
             ?>
         </ul>
