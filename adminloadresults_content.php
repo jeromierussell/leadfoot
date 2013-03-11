@@ -67,6 +67,7 @@
 		{
 			echo "<h2>Click 'Load' to import these results</h2>";
 			echo "<form action='".$config_basedir."index.php?content_page=adminloadresults' method='post'>";
+			echo "<input type='checkbox' name='qualifyingCanceled'> Check if qualifying was canceled<br>";
 			echo "<input type='hidden' name='espnkey' value='".$espn_race_id."'>";
 			echo "<input type='submit' name='load' value='Load'>\n";
 			echo "</form>";
@@ -77,6 +78,7 @@
 	{
 		// fetch the current schedule entry for the race we are processing
 		$schedule_id = getScheduleId();
+		$qualifyingCanceled = $_POST['qualifyingCanceled'];
 		
 		echo "Inserting race results...<p>";
 		// insert rows into the historicalraceresults table
@@ -177,7 +179,7 @@
 			$balance = $balance - $weekdollars;
 			
 			$finish = $row['finishingpos'];
-			if( $row['startingpos'] == 1 )
+			if( !$qualifyingCanceled && $row['startingpos'] == 1 )
 			{
 				$poles++;
 			}
