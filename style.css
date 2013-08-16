@@ -602,9 +602,9 @@ background-color:#101010;
 	margin-right: 10px;
 }
 
-#newsbody {
-	/*font-family: Trebuchet MS;*/
-	/*font-size: 12px;*/
+#newsbody img {
+	width:100%
+
 }
 
 span#timestamp {

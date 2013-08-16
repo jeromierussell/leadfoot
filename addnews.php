@@ -5,7 +5,8 @@ tinyMCE.init({
 	theme : "advanced",
 	mode : "textareas",
 	plugins : "fullpage",
-	theme_advanced_buttons3_add : "fullpage"
+	theme_advanced_buttons3_add : "fullpage",
+    extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align]"
 });
 </script>
 <div class='post'>
