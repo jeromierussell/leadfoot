@@ -45,8 +45,8 @@ function create_output($result)
 		$posttime = strtotime($row['datetimecreated']);
 		$timezone_offset = strtotime("+ 9 hours 30 minutes");
 		$posttime += $timezone_offset;
-		$output .= "<p><span id='timestamp'>".date('F j, Y', strtotime($row['datetimecreated']))." at ".date('g:i a', $posttime) . "</span>";
-		$output .= "<br><span id='postname'>" . $row['name'] . "</span> - <span id='postmessage'>" . $row['comments']."</span></p>";
+        $output .= "<div style='margin-top:5px;'><span id='postname'>" . $row['name'] . "</span> - <span id='postmessage'>" . $row['comments']."</span></div>";
+        $output .= "<div style='margin-top:4px;margin-bottom:6px'><span id='timestamp'>".date('F j, Y', strtotime($row['datetimecreated']))." at ".date('g:i a', $posttime) . "</span></div>";
 	}
 	return $output;
 }

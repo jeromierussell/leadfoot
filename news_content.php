@@ -2,11 +2,11 @@
 	<div class="story">
 		<div id="messageposts">
 			<fieldset class="lastPost">
-				<legend>Latest Message Board Post</legend>
+				<legend>Latest Message Board Posts</legend>
 				<a href='<?php $config_basedir ?>index.php?content_page=messageboard' style="float:right;margin-top:-10px">View Full Message Board</a>
 				<div style="margin-top:-10px">
 				<?php
-					$query = "SELECT * FROM `guestbook` ORDER BY `id` DESC limit 1";
+					$query = "SELECT * FROM `guestbook` ORDER BY `id` DESC limit 5";
 					$result = mysql_query($query);
 					$output = "";
 					while($row = mysql_fetch_assoc($result))
@@ -14,8 +14,8 @@
 						$posttime = strtotime($row['datetimecreated']);
 						$timezone_offset = strtotime("+ 9 hours 30 minutes");
 						$posttime += $timezone_offset;
-						$output .= "<p><span id='timestamp'>".date('F j, Y', strtotime($row['datetimecreated']))." at ".date('g:i a', $posttime) . "</span>";
-						$output .= "<br><span id='postname'>" . $row['name'] . "</span> - <span id='postmessage'>" . $row['comments']."</span></p>";
+                        $output .= "<div style='margin-top:5px;'><span id='postname'>" . $row['name'] . "</span> - <span id='postmessage'>" . $row['comments']."</span></div>";
+                        $output .= "<div style='margin-top:4px;margin-bottom:6px'><span id='timestamp'>".date('F j, Y', strtotime($row['datetimecreated']))." at ".date('g:i a', $posttime) . "</span></div>";
 					}
 
 					echo $output;
