@@ -65,7 +65,6 @@ if(isset($_SESSION['USERNAME']) == TRUE)
 	}
 
 require("streaks.php");
-require("nopoints.php");
 
 }
 
