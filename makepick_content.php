@@ -180,26 +180,11 @@ function confirmDelete()
 					$member_id	= $_POST['member_id'];
 					$driver_id	= $_POST['driver'];
 					$picksequence	= $_POST['picksequence'];					
-					
-					$sql = "INSERT INTO picks (dt,schedule_id,member_id,driver_id,picksequence,year, racekey) VALUES ('" . $date . "','" . $race_id . "','" . $member_id . "','" . $driver_id . "','" . $picksequence . "', '".SEASON_YEAR."', ".$next_race_key.")";
-					mysql_query($sql) or die(mysql_error());
 
-                    // check to see if we should auto-pick
-                    $members_sql = "SELECT COUNT(*) FROM members WHERE active=1";
-                    $members_result = mysql_query($members_sql);
-                    $number_of_members = mysql_result($members_result,0);
-                    $email_next_pick = false;
+                    insertPick($date, $race_id, $member_id, $driver_id, $picksequence, $next_race_key);
 
-                    if($picksequence < $number_of_members)
-                    {
-                        // attempt to auto-pick for next member in pick order
-                        $next_picksequence = $picksequence + 1;
-                        $sql_next_pick_member = "SELECT m.id FROM members m INNER JOIN annualmemberresults r ON r.member_id=m.id and r.year=".SEASON_YEAR." WHERE picksequence=".$next_picksequence;
-                        $next_pick_member_results = mysql_query($sql_next_pick_member) or die(mysql_error());
-                        $next_pick_member_row = mysql_fetch_assoc($next_pick_member_results);
-
-                        $did_next_pick = pickFromQueue($next_pick_member_row['id'], $next_race_id, $next_picksequence, $next_race_key);
-                    }
+                    // make next pick (will determine if next pick should be made based on pick queue settings)
+                    makeNextPick($picksequence, $next_race_id, $next_race_key);
 
 					echo "\n<h1>Your pick has been saved!</h1>\n";
 				}					
