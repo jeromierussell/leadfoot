@@ -4,6 +4,7 @@
 		
 		session_start();
 		require("config.php");
+        include("pick_from_queue.php");
 
 		if(isset($_SESSION['USERNAME']) == FALSE)
 		{
@@ -153,19 +154,17 @@
 					require("next_race.php");
 					
 					if($first_pick_nickname != "")
-					{	echo "<br>FIST PICK FOR " . $next_race_name . " IS " . $first_pick_nickname . "<br>";
+					{
+                        echo "<br>FIST PICK FOR " . $next_race_name . " IS " . $first_pick_nickname . "<br>";
 					}
-					$sql = "SELECT email FROM members WHERE nickname='" . $first_pick_nickname . "'";
-					$results = mysql_query($sql);
-					$row = mysql_fetch_assoc($results);
-					$email = $row['email'];
-					if(strlen($email) > 2)
-					{	mail($email, "LeadFoot Racing League - Notification", "Hey " . $first_pick_nickname . "! It is now your pick for " . $next_race_name . ".");
-					}
+
+                    // now close the race on the schedule
+                    $sql = "UPDATE schedule SET closed='1' WHERE id='" . $prev_race_id . "'";
+                    mysql_query($sql);
+
+                    // check if picking from queue
+                    $picked = pickFromQueue($first_pick_id, $next_race_id, 1, $next_race_key);
 //				}
-				// now close the race on the schedule
-				$sql = "UPDATE schedule SET closed='1' WHERE id='" . $prev_race_id . "'";
-				mysql_query($sql);
 			}
 			else	// if not submitted, then user just came to the page and we should display the entry form
 			{

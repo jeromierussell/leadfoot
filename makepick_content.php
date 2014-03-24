@@ -40,7 +40,8 @@ function confirmDelete()
 		*/
 		require("next_race.php");
 		include("emailfunctions.php");
-		
+        include("pick_from_queue.php");
+
 		$sql_race_exists = "SELECT * FROM schedule s WHERE s.year=".SEASON_YEAR." AND s.week=".SEASON_NEXT_WEEK.";";
 		$results_race_exists = mysql_query($sql_race_exists) or die(mysql_error());
 		if( mysql_num_rows($results_race_exists) == 0 )
@@ -182,19 +183,24 @@ function confirmDelete()
 					
 					$sql = "INSERT INTO picks (dt,schedule_id,member_id,driver_id,picksequence,year, racekey) VALUES ('" . $date . "','" . $race_id . "','" . $member_id . "','" . $driver_id . "','" . $picksequence . "', '".SEASON_YEAR."', ".$next_race_key.")";
 					mysql_query($sql) or die(mysql_error());
-					
-					// check to see if notifications are turned on system-wide first
-					if(NOTIFICATIONS == YES || NOTIFICATIONS == 3)
-					{
-						$members_sql = "SELECT COUNT(*) FROM members WHERE active=1";
-						$members_result = mysql_query($members_sql);
-						$number_of_members = mysql_result($members_result,0);
-						
-						if($picksequence < $number_of_members)						
-						{	
-							emailNextPick( $picksequence + 1 );							
-						}
-					}
+
+                    // check to see if we should auto-pick
+                    $members_sql = "SELECT COUNT(*) FROM members WHERE active=1";
+                    $members_result = mysql_query($members_sql);
+                    $number_of_members = mysql_result($members_result,0);
+                    $email_next_pick = false;
+
+                    if($picksequence < $number_of_members)
+                    {
+                        // attempt to auto-pick for next member in pick order
+                        $next_picksequence = $picksequence + 1;
+                        $sql_next_pick_member = "SELECT m.id FROM members m INNER JOIN annualmemberresults r ON r.member_id=m.id and r.year=".SEASON_YEAR." WHERE picksequence=".$next_picksequence;
+                        $next_pick_member_results = mysql_query($sql_next_pick_member) or die(mysql_error());
+                        $next_pick_member_row = mysql_fetch_assoc($next_pick_member_results);
+
+                        $did_next_pick = pickFromQueue($next_pick_member_row['id'], $next_race_id, $next_picksequence, $next_race_key);
+                    }
+
 					echo "\n<h1>Your pick has been saved!</h1>\n";
 				}					
 			}		
